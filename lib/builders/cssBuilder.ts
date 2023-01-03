@@ -1,6 +1,7 @@
 import { parseStringPromise } from 'xml2js'
+import { GeneratedFileType } from '../fs/generatedFiles'
 
-import { GeneratedFileType, IconFs } from './iconFs'
+import { IconFs } from '../fs/iconFs'
 
 interface SVGFile {
   svg: {
@@ -28,7 +29,7 @@ interface Glyph {
   }
 }
 
-export const buildCSS = async (
+export const cssBuilder = async (
   fs: IconFs,
   getFilePath: (ref: string) => string,
 ): Promise<void> => {

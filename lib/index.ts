@@ -1,9 +1,10 @@
 import type { PluginOption, ResolvedConfig } from 'vite'
 
-import { buildCSS } from './buildCSS'
+import { cssBuilder } from './builders/cssBuilder'
 import { SVGToFontPluginConfig, SVGToFontPluginOptions } from './config'
-import { FontBuilder } from './fontBuilder'
-import { GeneratedFileType, IconFs, iconFs } from './iconFs'
+import { FontBuilder } from './builders/FontBuilder'
+import { GeneratedFileType, initGeneratedFiles } from './fs/generatedFiles'
+import { iconFs } from './fs/iconFs'
 
 export async function vitePluginSVGToFont(
   opt: SVGToFontPluginOptions,
@@ -16,9 +17,10 @@ export async function vitePluginSVGToFont(
     ...opt,
   }
 
-  const fs: IconFs = await iconFs(pluginConfig)
+  const generatedFiles = initGeneratedFiles(pluginConfig.fontName)
+  const fs = iconFs(pluginConfig, generatedFiles)
   const distFs = fs.dist
-  const fontBuilder: FontBuilder = FontBuilder(fs, pluginConfig)
+  const fontBuilder: FontBuilder = new FontBuilder(fs, pluginConfig)
 
   return {
     name: 'vite-plugin-svg-to-font',
@@ -29,22 +31,18 @@ export async function vitePluginSVGToFont(
       await fontBuilder.build()
 
       if (isBuild) {
-        distFs.eot.ref = this.emitFile(distFs.emitAsset(GeneratedFileType.EOT))
-        distFs.svg.ref = this.emitFile(distFs.emitAsset(GeneratedFileType.SVG))
-        distFs.ttf.ref = this.emitFile(distFs.emitAsset(GeneratedFileType.TTF))
-        distFs.woff.ref = this.emitFile(
-          distFs.emitAsset(GeneratedFileType.WOFF),
-        )
-        distFs.woff2.ref = this.emitFile(
-          distFs.emitAsset(GeneratedFileType.WOFF2),
-        )
+        distFs.eot.ref = this.emitFile(distFs.emit(GeneratedFileType.EOT))
+        distFs.svg.ref = this.emitFile(distFs.emit(GeneratedFileType.SVG))
+        distFs.ttf.ref = this.emitFile(distFs.emit(GeneratedFileType.TTF))
+        distFs.woff.ref = this.emitFile(distFs.emit(GeneratedFileType.WOFF))
+        distFs.woff2.ref = this.emitFile(distFs.emit(GeneratedFileType.WOFF2))
 
-        await buildCSS(fs, ref => this.getFileName(ref))
-        fs.dist.css.ref = this.emitFile(distFs.emitAsset(GeneratedFileType.CSS))
+        await cssBuilder(fs, ref => this.getFileName(ref))
+        fs.dist.css.ref = this.emitFile(distFs.emit(GeneratedFileType.CSS))
         return
       }
 
-      await buildCSS(fs, ref => ref)
+      await cssBuilder(fs, ref => ref)
     },
     load: {
       order: 'pre',
