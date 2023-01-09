@@ -1,5 +1,4 @@
 import { EmittedFile } from 'rollup'
-import { afterEach, describe, expect, it } from 'vitest'
 import { testPluginConfig } from '../../test/config'
 import { testBuiltFiles, testGeneratedFiles } from '../../test/testFs'
 import { BuiltFiles } from './BuiltFiles'

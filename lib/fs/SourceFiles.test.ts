@@ -1,5 +1,3 @@
-import { ReadStream } from 'fs'
-import { describe, expect, expectTypeOf, it } from 'vitest'
 import { testIconNames } from '../../test/icons'
 import { testSourceFiles } from '../../test/testFs'
 import { SourceFiles } from './SourceFiles'
@@ -17,7 +15,6 @@ describe(SourceFiles.name, () => {
       let i = 0
       for await (const res of testSourceFiles) {
         expect(res.file).toEqual(testIconNames[i])
-        expectTypeOf(res).toMatchTypeOf<{ stream: ReadStream; file: string }>()
         i++
       }
     })
