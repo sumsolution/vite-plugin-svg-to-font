@@ -1,6 +1,6 @@
 import { execSync } from 'child_process'
-import { createWriteStream } from 'fs'
-import { readFile, writeFile } from 'fs/promises'
+import { createWriteStream } from 'node:fs'
+import { readFile, writeFile } from 'node:fs/promises'
 import svg2ttf from 'svg2ttf'
 import SVGIcons2SVGFontStream from 'svgicons2svgfont'
 import { FileResult, fileSync } from 'tmp'

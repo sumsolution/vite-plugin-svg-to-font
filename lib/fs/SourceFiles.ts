@@ -1,6 +1,6 @@
-import { createReadStream, ReadStream } from 'fs'
-import { readdir } from 'fs/promises'
-import { join } from 'path'
+import { createReadStream, ReadStream } from 'node:fs'
+import { readdir } from 'node:fs/promises'
+import { join } from 'node:path'
 
 export class SourceFiles
   implements AsyncIterable<{ stream: ReadStream; file: string }>
