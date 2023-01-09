@@ -1,17 +1,14 @@
 {
-	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"isolatedModules": true,
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"target": "ESNext"
-	},
-	"include": [
-		"lib",
-		"test"
-	],
-	"exclude": [
-		"node_modules"
-	]
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "declaration": true,
+	  "outDir": "dist"
+  },
+  "include": ["lib", "test"],
+  "exclude": ["node_modules"]
 }

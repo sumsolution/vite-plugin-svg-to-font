@@ -6,7 +6,7 @@ import { FontBuilder } from './builders/FontBuilder'
 import { GeneratedFileType, initGeneratedFiles } from './fs/generatedFiles'
 import { iconFs } from './fs/iconFs'
 
-export async function vitePluginSVGToFont(
+export default async function vitePluginSVGToFont(
   opt: SVGToFontPluginOptions,
 ): Promise<PluginOption> {
   let isBuild: boolean
