@@ -1,6 +1,28 @@
 {
-  "name": "vite-plugin-svg-to-font",
+  "name": "@sumsolution/vite-plugin-svg-to-font",
   "version": "1.0.0",
+  "license": "MIT",
+  "author": "Summer Jordan <summer@codebyjordan.com> (https://github.com/summer-jordan)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sumsolution/vite-plugin-svg-to-font"
+  },
+  "bugs": {
+    "url": "https://github.com/sumsolution/vite-plugin-svg-to-font",
+    "email": "summer@codebyjordan.com"
+  },
+  "types": "./types/index.d.ts",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.js",
+    "default": "./index.js"
+  },
+  "scripts": {
+    "prepare": "pnpx husky install",
+    "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "test": "jest",
+    "lint": "eslint"
+  },
   "dependencies": {
     "svg2ttf": "^6.0.3",
     "svgicons2svgfont": "^12.0.0",
@@ -28,20 +50,19 @@
     "eslint-config-prettier": "^8.5.0",
     "jest": "^29.3.1",
     "prettier": "^2.8.1",
+    "read-pkg": "^7.1.0",
+    "rimraf": "^3.0.2",
     "rollup": "^3.9.0",
+    "rollup-plugin-generate-package-json": "^3.2.0",
     "rollup-plugin-node-externals": "^5.0.3",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
+    "type-fest": "^3.5.1",
     "typescript": "^4.9.4",
     "vite": "^4.0.3"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
-  },
-  "scripts": {
-    "prepare": "pnpx husky install",
-    "build": "rollup --config rollup.config.ts --configPlugin typescript",
-    "test": "jest"
   }
 }
