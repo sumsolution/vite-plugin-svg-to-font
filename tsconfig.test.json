@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ]
+  },
+  "include": ["lib", "test"],
+  "exclude": ["node_modules", "dist"]
+}
