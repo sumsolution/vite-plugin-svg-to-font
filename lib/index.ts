@@ -17,10 +17,15 @@ export default async function vitePluginSVGToFont(
     ...opt,
   }
 
+  // Setup
   const generatedFiles = initGeneratedFiles(pluginConfig.fontName)
   const fs = iconFs(pluginConfig, generatedFiles)
-  const distFs = fs.dist
   const fontBuilder: FontBuilder = new FontBuilder(fs, pluginConfig)
+  const distFs = fs.dist
+
+  // Handle virtual module
+  const virtualModuleId = 'virtual:svg-to-font'
+  const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
     name: 'vite-plugin-svg-to-font',
@@ -44,11 +49,21 @@ export default async function vitePluginSVGToFont(
 
       await cssBuilder(fs, ref => ref)
     },
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId
+      }
+    },
     load: {
       order: 'pre',
       handler: (id: string) => {
+        // During dev, we return the file contents
         if (!isBuild && distFs.has(id)) {
           return fs.dist.read(id)
+        }
+        // We should always return the CSS file contents when the virtual module is requested
+        if (isBuild && id === resolvedVirtualModuleId) {
+          return fs.dist.css.content.toString()
         }
         return null
       },
