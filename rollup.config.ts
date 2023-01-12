@@ -5,27 +5,28 @@ import typescript from '@rollup/plugin-typescript'
 import { defineConfig } from 'rollup'
 import externals from 'rollup-plugin-node-externals'
 
-export default defineConfig(async (_) => {
-  const { name, version, exports } = await readPackage()
+export default defineConfig(async _ => {
+  const { name, version, license, author, repository, bugs, types, exports } =
+    await readPackage()
 
   return {
     input: 'lib/index.ts',
     output: [
       {
         file: 'dist/index.mjs',
-        format: 'es'
+        format: 'es',
       },
       {
         file: 'dist/index.js',
-        format: 'cjs'
-      }
+        format: 'cjs',
+      },
     ],
     plugins: [
       {
         name: 'clean-dist',
         buildStart: () => {
           rimraf.sync('dist/*')
-        }
+        },
       },
       typescript(),
       externals(),
@@ -33,9 +34,14 @@ export default defineConfig(async (_) => {
         baseContents: {
           name,
           version,
-          exports
-        }
-      })
+          license,
+          author,
+          repository,
+          bugs,
+          types,
+          exports,
+        },
+      }),
     ],
   }
 })
