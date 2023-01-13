@@ -33,14 +33,25 @@ export class BuiltFiles implements GeneratedFiles {
     return this.generatedFiles.woff2
   }
 
+  get fileNameMimeMap(): Record<string, string> {
+    return {
+      [this.css.name]: 'text/css',
+      [this.eot.name]: 'application/vnd.ms-fontobject',
+      [this.svg.name]: 'image/svg+xml',
+      [this.ttf.name]: 'application/x-font-ttf',
+      [this.woff.name]: 'application/font-woff',
+      [this.woff2.name]: 'application/font-woff2',
+    }
+  }
+
   has(id: string): id is GeneratedFileType {
     return this.hasFile(id).has
   }
 
-  read(id: string): string | null {
+  read(id: string): Buffer | null {
     const { has, type } = this.hasFile(id)
     if (has) {
-      return this[type].content.toString()
+      return this[type].content
     }
     return null
   }

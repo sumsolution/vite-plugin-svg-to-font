@@ -24,14 +24,33 @@ export default async function vitePluginSVGToFont(
   const distFs = fs.dist
 
   // Handle virtual module
-  const virtualModuleId = 'virtual:svg-to-font'
+  const virtualModuleId = 'virtual:svg-to-font.css'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
     name: 'vite-plugin-svg-to-font',
-    async configResolved(resolvedConfig: ResolvedConfig) {
+    configResolved(resolvedConfig) {
       isBuild = resolvedConfig.command === 'build'
     },
+
+    configureServer(server) {
+      for (const [name, mime] of Object.entries(fs.dist.fileNameMimeMap)) {
+        server.middlewares.use(`/${name}`, (req, res) => {
+          const font = fs.dist.read(name)
+          res.setHeader('content-type', mime)
+          res.setHeader('content-length', font.length)
+          res.statusCode = 200
+          return res.end(font)
+        })
+      }
+    },
+
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId
+      }
+    },
+
     async buildStart() {
       await fontBuilder.build()
 
@@ -49,24 +68,17 @@ export default async function vitePluginSVGToFont(
 
       await cssBuilder(fs, ref => ref)
     },
-    resolveId(id) {
-      if (id === virtualModuleId) {
-        return resolvedVirtualModuleId
+
+    load: (id: string) => {
+      // During dev, we return the file contents
+      if (distFs.has(id)) {
+        return fs.dist.read(id).toString()
       }
-    },
-    load: {
-      order: 'pre',
-      handler: (id: string) => {
-        // During dev, we return the file contents
-        if (!isBuild && distFs.has(id)) {
-          return fs.dist.read(id)
-        }
-        // We should always return the CSS file contents when the virtual module is requested
-        if (isBuild && id === resolvedVirtualModuleId) {
-          return fs.dist.css.content.toString()
-        }
-        return null
-      },
+      // We should always return the CSS file contents when the virtual module is requested
+      if (id === resolvedVirtualModuleId) {
+        return fs.dist.css.content.toString()
+      }
+      return null
     },
   }
 }
