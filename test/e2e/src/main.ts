@@ -1,23 +1,20 @@
+import 'virtual:svg-to-font.css'
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from './counter'
+import { testIconsNames } from '../../icons'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
+    <h1>@sumsolution/vite-plugin-svg-to-font</h1>
+    <div id="icons">
+        ${testIconsNames
+          .map(
+            iconName =>
+              `<div class="card"><i class="icon-font ${iconName}"></i></div>`,
+          )
+          .join('\n')}
     </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
+    <a class="read-the-docs" href="https://github.com/sumsolution/vite-plugin-svg-to-font/README.md">
+      Read the docs
+    </a>
   </div>
 `
-
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)

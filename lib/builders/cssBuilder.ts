@@ -44,17 +44,17 @@ export const cssBuilder = async (
   const css = `
 @font-face {
   font-family: '${fontFamily}';
-  src: url('${getFilePath(fs.dist.eot.ref)}');
-  src: url('${getFilePath(
+  src: url('/${getFilePath(fs.dist.eot.ref)}');
+  src: url('/${getFilePath(
     fs.dist.woff2.ref,
   )}') format('woff2'), /* Super Modern Browsers */
-       url('${getFilePath(
+       url('/${getFilePath(
          fs.dist.woff.ref,
        )}')  format('woff'), /* Pretty Modern Browsers */
-       url('${getFilePath(
+       url('/${getFilePath(
          fs.dist.ttf.ref,
        )}')   format('truetype'), /* Safari, Android, iOS */
-       url('${getFilePath(
+       url('/${getFilePath(
          fs.dist.svg.ref,
        )}#${fontFamily}') format('svg'); /* Legacy iOS */
   font-weight: normal;

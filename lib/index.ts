@@ -1,14 +1,10 @@
-import type { PluginOption, ResolvedConfig } from 'vite'
-
 import { cssBuilder } from './builders/cssBuilder'
 import { SVGToFontPluginConfig, SVGToFontPluginOptions } from './config'
 import { FontBuilder } from './builders/FontBuilder'
 import { GeneratedFileType, initGeneratedFiles } from './fs/generatedFiles'
 import { iconFs } from './fs/iconFs'
 
-export default async function vitePluginSVGToFont(
-  opt: SVGToFontPluginOptions,
-): Promise<PluginOption> {
+export default function vitePluginSVGToFont(opt: SVGToFontPluginOptions) {
   let isBuild: boolean
   const pluginConfig: SVGToFontPluginConfig = {
     ...{
@@ -17,16 +13,40 @@ export default async function vitePluginSVGToFont(
     ...opt,
   }
 
+  // Setup
   const generatedFiles = initGeneratedFiles(pluginConfig.fontName)
   const fs = iconFs(pluginConfig, generatedFiles)
-  const distFs = fs.dist
   const fontBuilder: FontBuilder = new FontBuilder(fs, pluginConfig)
+  const distFs = fs.dist
+
+  // Handle virtual module
+  const virtualModuleId = 'virtual:svg-to-font.css'
+  const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
     name: 'vite-plugin-svg-to-font',
-    async configResolved(resolvedConfig: ResolvedConfig) {
+    configResolved(resolvedConfig) {
       isBuild = resolvedConfig.command === 'build'
     },
+
+    configureServer(server) {
+      for (const [name, mime] of Object.entries(fs.dist.fileNameMimeMap)) {
+        server.middlewares.use(`/${name}`, (req, res) => {
+          const font = fs.dist.read(name)
+          res.setHeader('content-type', mime)
+          res.setHeader('content-length', font.length)
+          res.statusCode = 200
+          return res.end(font)
+        })
+      }
+    },
+
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId
+      }
+    },
+
     async buildStart() {
       await fontBuilder.build()
 
@@ -44,14 +64,17 @@ export default async function vitePluginSVGToFont(
 
       await cssBuilder(fs, ref => ref)
     },
-    load: {
-      order: 'pre',
-      handler: (id: string) => {
-        if (!isBuild && distFs.has(id)) {
-          return fs.dist.read(id)
-        }
-        return null
-      },
+
+    load: (id: string) => {
+      // During dev, we return the file contents
+      if (distFs.has(id)) {
+        return fs.dist.read(id).toString()
+      }
+      // We should always return the CSS file contents when the virtual module is requested
+      if (id === resolvedVirtualModuleId) {
+        return fs.dist.css.content.toString()
+      }
+      return null
     },
   }
 }

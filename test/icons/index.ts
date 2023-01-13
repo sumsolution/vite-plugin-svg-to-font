@@ -1,4 +1,4 @@
-export const testIconNames = [
+export const testIconNamesExt = [
   'add.svg',
   'calendar.svg',
   'chevron-down.svg',
@@ -22,3 +22,5 @@ export const testIconNames = [
   'star.svg',
   'trash.svg',
 ]
+
+export const testIconsNames = testIconNamesExt.map((name) => name.match(/(.*)\.svg/)[1])
