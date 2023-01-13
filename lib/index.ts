@@ -1,14 +1,10 @@
-import type { PluginOption, ResolvedConfig } from 'vite'
-
 import { cssBuilder } from './builders/cssBuilder'
 import { SVGToFontPluginConfig, SVGToFontPluginOptions } from './config'
 import { FontBuilder } from './builders/FontBuilder'
 import { GeneratedFileType, initGeneratedFiles } from './fs/generatedFiles'
 import { iconFs } from './fs/iconFs'
 
-export default async function vitePluginSVGToFont(
-  opt: SVGToFontPluginOptions,
-): Promise<PluginOption> {
+export default function vitePluginSVGToFont(opt: SVGToFontPluginOptions) {
   let isBuild: boolean
   const pluginConfig: SVGToFontPluginConfig = {
     ...{
