@@ -57,11 +57,13 @@ h1 {
 }
 
 .card {
+  display: inline-block;
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
+  text-decoration: underline;
 }
 
 button {
