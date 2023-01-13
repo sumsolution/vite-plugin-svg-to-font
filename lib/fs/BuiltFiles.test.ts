@@ -7,7 +7,7 @@ import { GeneratedFileType } from './generatedFiles'
 describe(BuiltFiles.name, () => {
   const testFileType = GeneratedFileType.CSS
   const testFileId = `${testPluginConfig.fontName}.${testFileType}`
-  const testFileContent = 'Test File Content'
+  const testFileContent = Buffer.from('Test File Content')
   const testBuffer = Buffer.from(testFileContent)
 
   afterEach(() => {
