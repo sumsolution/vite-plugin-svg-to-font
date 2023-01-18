@@ -11,6 +11,7 @@
     "url": "https://github.com/sumsolution/vite-plugin-svg-to-font",
     "email": "summer@codebyjordan.com"
   },
+  "readme": "https://github.com/sumsolution/vite-plugin-svg-to-font/README.md",
   "types": "./types/index.d.ts",
   "exports": {
     "import": "./index.mjs",
