@@ -1,5 +1,7 @@
 name: "PNPM Install & Cache"
 
+description: "Install and cache dependencies using pnpm"
+
 runs:
   using: composite
   steps:
@@ -12,3 +14,4 @@ runs:
         node-version: '18'
         cache: 'pnpm'
     - run: pnpm install --frozen-lockfile
+      shell: bash
