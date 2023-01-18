@@ -5,7 +5,6 @@ import vitePluginSVGToFont from '@sumsolution/vite-plugin-svg-to-font'
 export default defineConfig({
   plugins: [
     vitePluginSVGToFont({
-      fontName: 'icon-font',
       svgPath: resolve(__dirname, 'icons')
     })
   ]

@@ -9,6 +9,7 @@ export default function vitePluginSVGToFont(opt: SVGToFontPluginOptions) {
   const pluginConfig: SVGToFontPluginConfig = {
     ...{
       outDir: 'icons',
+      fontName: 'icon-font',
     },
     ...opt,
   }
