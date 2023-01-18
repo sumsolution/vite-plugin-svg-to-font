@@ -11,5 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/pnpm-install.yml
+      - uses: ./.github/actions/pnpm-install.yml
       - run: npm run build
