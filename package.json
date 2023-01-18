@@ -12,6 +12,11 @@
     "email": "summer@codebyjordan.com"
   },
   "readme": "https://github.com/sumsolution/vite-plugin-svg-to-font/README.md",
+  "packageManager": "pnpm@7.25.0",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=7"
+  },
   "types": "./types/index.d.ts",
   "exports": {
     "import": "./index.mjs",
