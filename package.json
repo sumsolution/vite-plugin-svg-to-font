@@ -21,7 +21,13 @@
     "prepare": "pnpx husky install",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "test": "jest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "example:deps": "npm run build && cd example && pnpm i && cd .. && npm run copy:plugin",
+    "preexample:build": "npm run example:deps",
+    "example:build": "cd example && npm run build",
+    "preexample:serve": "npm run example:deps",
+    "example:serve": "cd example && npm run dev",
+    "copy:plugin": "mkdir -p ./example/node_modules/@sumsolution/vite-plugin-svg-to-font && cp -R ./dist/* ./example/node_modules/@sumsolution/vite-plugin-svg-to-font"
   },
   "dependencies": {
     "svg2ttf": "^6.0.3",

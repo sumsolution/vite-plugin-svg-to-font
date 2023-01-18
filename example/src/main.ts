@@ -1,6 +1,6 @@
 import 'virtual:svg-to-font.css'
 import './style.css'
-import { testIconsNames } from '../../icons'
+import { testIconsNames } from '../../test/icons'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
