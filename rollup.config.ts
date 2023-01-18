@@ -1,3 +1,4 @@
+import { copyFile } from 'node:fs/promises'
 import { readPackage } from 'read-pkg'
 import rimraf from 'rimraf'
 import generatePackageJson from 'rollup-plugin-generate-package-json'
@@ -6,7 +7,7 @@ import { defineConfig } from 'rollup'
 import externals from 'rollup-plugin-node-externals'
 
 export default defineConfig(async _ => {
-  const { author, bugs, exports, license, name, repository, types, version, } =
+  const { author, bugs, exports, license, name, readme, repository, types, version, } =
     await readPackage()
 
   return {
@@ -38,10 +39,17 @@ export default defineConfig(async _ => {
           author,
           repository,
           bugs,
+          readme,
           types,
           exports,
         },
       }),
+      {
+        name: 'copy-readme',
+        writeBundle: async () => {
+          await copyFile('./README.md', './dist/README.md')
+        }
+      }
     ],
   }
 })

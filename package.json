@@ -1,6 +1,6 @@
 {
   "name": "@sumsolution/vite-plugin-svg-to-font",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "author": "Summer Jordan <summer@codebyjordan.com> (https://github.com/summer-jordan)",
   "repository": {
