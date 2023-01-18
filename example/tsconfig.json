@@ -13,7 +13,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@sumsolution/vite-plugin-svg-to-font": [ "../dist" ]
+    }
   },
   "include": [
     "src"

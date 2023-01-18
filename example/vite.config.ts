@@ -1,12 +1,11 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import vitePluginSVGToFont from '../../lib'
+import vitePluginSVGToFont from '@sumsolution/vite-plugin-svg-to-font'
 
 export default defineConfig({
   plugins: [
     vitePluginSVGToFont({
-      fontName: 'icon-font',
-      svgPath: resolve(__dirname, '..', 'icons')
+      svgPath: resolve(__dirname, 'icons')
     })
   ]
 })
