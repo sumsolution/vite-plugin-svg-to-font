@@ -6,7 +6,7 @@ import { defineConfig } from 'rollup'
 import externals from 'rollup-plugin-node-externals'
 
 export default defineConfig(async _ => {
-  const { name, version, license, author, repository, bugs, types, exports } =
+  const { author, bugs, exports, license, name, repository, types, version, } =
     await readPackage()
 
   return {

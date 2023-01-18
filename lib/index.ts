@@ -66,11 +66,11 @@ export default function vitePluginSVGToFont(opt: SVGToFontPluginOptions) {
     },
 
     load: (id: string) => {
-      // During dev, we return the file contents
+      // During dev, we return the font file contents
       if (distFs.has(id)) {
         return fs.dist.read(id).toString()
       }
-      // We should always return the CSS file contents when the virtual module is requested
+      // Handle virtual module
       if (id === resolvedVirtualModuleId) {
         return fs.dist.css.content.toString()
       }

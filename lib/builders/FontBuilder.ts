@@ -1,11 +1,11 @@
-import { execSync } from 'child_process'
 import { createWriteStream } from 'node:fs'
-import { readFile, writeFile } from 'node:fs/promises'
+import { readFile } from 'node:fs/promises'
 import svg2ttf from 'svg2ttf'
 import SVGIcons2SVGFontStream from 'svgicons2svgfont'
 import { FileResult, fileSync } from 'tmp'
 import ttf2eot from 'ttf2eot'
 import ttf2woff from 'ttf2woff'
+import ttf2woff2 from 'ttf2woff2'
 import { SVGToFontPluginConfig } from '../config'
 import { GeneratedFileType } from '../fs/generatedFiles'
 
@@ -74,17 +74,10 @@ export class FontBuilder {
     const ttfBuffer = Buffer.from(ttf.buffer)
     this.fs.dist.write(GeneratedFileType.TTF, ttfBuffer)
 
-    // Generate EOT and WOFF from TTF
+    // Generate EOT, WOFF, and WOFF2 from TTF
     this.fs.dist.write(GeneratedFileType.EOT, ttf2eot(ttf.buffer))
     this.fs.dist.write(GeneratedFileType.WOFF, ttf2woff(ttf.buffer))
-
-    // Generate WOFF2 from TTF
-    // I could not get this package to work via the js API, so I utilize the CLI
-    const ttfTmp = fileSync()
-    const woff2Tmp = fileSync()
-    await writeFile(ttfTmp.name, ttf.buffer)
-    execSync(`cat ${ttfTmp.name} | ttf2woff2 > ${woff2Tmp.name}`)
-    this.fs.dist.write(GeneratedFileType.WOFF2, await readFile(woff2Tmp.name))
+    this.fs.dist.write(GeneratedFileType.WOFF2, ttf2woff2(ttfBuffer))
   }
 
   private generateMetadata(file: string, codePoint: number) {
