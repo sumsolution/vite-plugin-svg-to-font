@@ -1,4 +1,5 @@
 import type { Config } from 'jest'
+import { resolve } from 'path'
 
 const config: Config = {
   testEnvironment: 'node',
@@ -10,6 +11,14 @@ const config: Config = {
       },
     ],
   },
+  coverageReporters: ['lcov'],
+  coverageDirectory: resolve('coverage'),
+  collectCoverageFrom: [
+    'lib/**/*.ts',
+    '!**/*.test.ts',
+    '!**/node_modules/**',
+    '!**/vendor/**',
+  ]
 }
 
 export default config

@@ -27,6 +27,7 @@
     "prepare": "pnpx husky install",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "test": "jest",
+    "test:ci": "jest --coverage",
     "lint": "eslint",
     "example:deps": "npm run build && cd example && pnpm i && cd .. && npm run copy:plugin",
     "preexample:build": "npm run example:deps",

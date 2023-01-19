@@ -1,0 +1,71 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - 'releases/[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Bump Version
+        run: npm --no-git-tag-version version $(echo ${{ github.ref_name }} | cut -d / -f 2-)
+      - name: Git Commit/Push
+        run: |
+          git commit -a -m="v${{ github.ref_name }} Release to NPM" --author="GitHub Actions <actions@github.com>"
+          git push origin ${{ github.ref_name }}
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/pnpm-install
+      - run: |
+          npm run test
+          npm run build
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist
+          retention-days: 1
+  publish:
+    runs-on: ubuntu-latest
+    needs: test-build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+      - name: Publish to NPM
+        working-directory: dist
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Merge/Tag
+        run: |
+          git fetch origin
+          git pull origin
+          git checkout main
+          git pull origin
+          git merge ${{ github.ref_name }}
+          git tag -a v$(echo ${{ github.ref_name }} | cut -d / -f 2-) -m "Release v$(echo ${{ github.ref_name }}"
+          git push origin main --tags
+      - name: Publish Release
+        run: |
+          tar -cvzf v$(echo ${{ github.ref_name }} | cut -d / -f 2-).tgz /dist
+          gh release create v$(echo ${{ github.ref_name }} | cut -d / -f 2-) v$(echo ${{ github.ref_name }} | cut -d / -f 2-).tgz --draft=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          
+          
