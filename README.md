@@ -2,7 +2,6 @@
 ![test](https://github.com/sumsolution/vite-plugin-svg-to-font/actions/workflows/test.yml/badge.svg)
 ![build](https://github.com/sumsolution/vite-plugin-svg-to-font/actions/workflows/build.yml/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2e2d198c14a70885f4cf/maintainability)](https://codeclimate.com/github/sumsolution/vite-plugin-svg-to-font/maintainability)
-[![npm version](https://badge.fury.io/js/@sumsolution%2Fvite-plugin-svg-to-font.svg)](https://badge.fury.io/js/@sumsolution%2Fvite-plugin-svg-to-font)
 
 Vite plugin for converting SVG files into an icon font in the most commonly supported formats.
 
