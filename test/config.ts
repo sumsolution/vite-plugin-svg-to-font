@@ -8,4 +8,6 @@ export const testPluginConfig: SVGToFontPluginConfig = {
   fontName: 'testFont',
   outDir: testOutDir.name,
   svgPath: resolve(__dirname, 'icons'),
+  base: '/',
+  isBuild: true
 }
