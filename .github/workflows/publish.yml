@@ -37,7 +37,7 @@ jobs:
           git commit -a -m="v${{ github.ref_name }} Release to NPM"
           git push origin ${{ github.ref_name }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_ADMIN_TOKEN }}
   publish:
     runs-on: ubuntu-latest
     needs: version
@@ -71,7 +71,7 @@ jobs:
           tar -cvzf v$(echo ${{ github.ref_name }} | cut -d / -f 2-).tgz /dist
           gh release create v$(echo ${{ github.ref_name }} | cut -d / -f 2-) v$(echo ${{ github.ref_name }} | cut -d / -f 2-).tgz --draft=false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_ADMIN_TOKEN }}
 
           
           
