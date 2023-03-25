@@ -1,0 +1,16 @@
+name: "Write Version and Archive"
+description: "Creates version.txt and archives the artifact"
+
+
+runs:
+  using: composite
+  steps:
+    - name: Set Version
+      shell: bash
+      run: echo ${{ github.ref_name }} | cut -d / -f 2- > version.txt
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: version-artifact
+        path: version.txt
+        retention-days: 1
