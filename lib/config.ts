@@ -9,4 +9,6 @@ export interface SVGToFontPluginOptions {
 
 export type SVGToFontPluginConfig = Omit<SVGToFontPluginOptions, 'outDir'> & {
   outDir: string
+  isBuild: boolean
+  base: string
 }
