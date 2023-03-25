@@ -17,7 +17,9 @@ jobs:
         run: npm --no-git-tag-version version $(echo ${{ github.ref_name }} | cut -d / -f 2-)
       - name: Git Commit/Push
         run: |
-          git commit -a -m="v${{ github.ref_name }} Release to NPM" --author="GitHub Actions <actions@github.com>"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -a -m="v${{ github.ref_name }} Release to NPM"
           git push origin ${{ github.ref_name }}
   test-build:
     runs-on: ubuntu-latest
