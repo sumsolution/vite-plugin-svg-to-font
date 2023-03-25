@@ -25,6 +25,8 @@ jobs:
     needs: test-build
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACTIONS_REPO_ADMIN }}
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -43,6 +45,8 @@ jobs:
     needs: version
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACTIONS_REPO_ADMIN }}
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
