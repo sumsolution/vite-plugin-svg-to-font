@@ -21,6 +21,8 @@ jobs:
           git config user.email github-actions@github.com
           git commit -a -m="v${{ github.ref_name }} Release to NPM"
           git push origin ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   test-build:
     runs-on: ubuntu-latest
     steps:
@@ -44,6 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
+          path: ./dist
       - uses: actions/setup-node@v3
         with:
           node-version: 18
