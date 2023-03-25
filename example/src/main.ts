@@ -1,6 +1,6 @@
 import 'virtual:svg-to-font.css'
 import './style.css'
-import { testIconsNames } from '../../test/icons'
+import { testIconsNames } from '../icons'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -13,7 +13,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           )
           .join('\n')}
     </div>
-    <a class="read-the-docs" href="https://github.com/sumsolution/vite-plugin-svg-to-font/README.md">
+    <a class="read-the-docs" href="https://github.com/sumsolution/vite-plugin-svg-to-font/blob/main/README.md">
       Read the docs
     </a>
   </div>
