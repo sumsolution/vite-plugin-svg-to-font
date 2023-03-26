@@ -53,16 +53,18 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Bump repo version
-        run: npm version ${{ env.pkg_version }}
+        run: npm --no-git-tag-version version ${{ env.pkg_version }}
       - name: Merge/Tag
         run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git fetch origin
           git pull origin
           git commit -a
           git checkout main
           git pull origin
-          git merge ${{ github.ref_name }}
-          git tag -a v${{ env.pkg_version }} -m "Release v${{ env.pkg_version }}"
+          git merge ${{ github.ref_name }} -m "npm publish"
+          git tag -a v${{ env.pkg_version }} -m "v${{ env.pkg_version }}"
           git push origin main --tags
       - name: Publish Release
         run: |
