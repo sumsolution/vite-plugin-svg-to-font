@@ -1,0 +1,15 @@
+name: "Read Version"
+description: "Downloads version.txt and adds to the environment under the key env.pkg_version "
+
+runs:
+  using: composite
+  steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: version-artifacts
+        path: version.txt
+    - name: Set Env
+      id: pkg_version
+      shell: bash
+      run: echo "pkg_version=$(cat version.txt)" >> $GITHUB_ENV
