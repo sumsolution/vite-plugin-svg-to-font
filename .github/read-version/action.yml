@@ -8,7 +8,6 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: version-artifact
-        path: version.txt
     - name: Set Env
       id: pkg_version
       shell: bash
