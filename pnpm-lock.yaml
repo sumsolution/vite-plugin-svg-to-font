@@ -33,7 +33,7 @@ specifiers:
   ttf2woff2: ^5.0.0
   type-fest: ^3.5.1
   typescript: ^4.9.4
-  vite: ^4.0.3
+  vite: ^4.0.5
   xml2js: ^0.4.23
 
 dependencies:
@@ -72,7 +72,7 @@ devDependencies:
   ts-node: 10.9.1_awa2wsr5thmg3i7jqycphctjfq
   type-fest: 3.5.2
   typescript: 4.9.4
-  vite: 4.0.4_@types+node@18.11.18
+  vite: 4.0.5_@types+node@18.11.18
 
 packages:
 
@@ -4113,8 +4113,8 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite/4.0.4_@types+node@18.11.18:
-    resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}
+  /vite/4.0.5_@types+node@18.11.18:
+    resolution: {integrity: sha512-7m87RC+caiAxG+8j3jObveRLqaWA/neAdCat6JAZwMkSWqFHOvg8MYe5fAQxVBRAuKAQ1S6XDh3CBQuLNbY33w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
